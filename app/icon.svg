@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="MARKETWISE">
+  <rect width="64" height="64" rx="14" fill="#091225"/>
+  <ellipse cx="32" cy="32" rx="22" ry="9" fill="none" stroke="#afc0d2" stroke-width="1.6" transform="rotate(-24 32 32)"/>
+  <ellipse cx="32" cy="32" rx="22" ry="9" fill="none" stroke="#2a3f63" stroke-width="1.6" transform="rotate(36 32 32)"/>
+  <circle cx="32" cy="32" r="6" fill="#3ee0cb"/>
+  <circle cx="12" cy="40" r="3.2" fill="#77b6ff"/>
+  <circle cx="52" cy="24" r="3.2" fill="#f1bc60"/>
+  <circle cx="22" cy="14" r="3.2" fill="#b99bff"/>
+  <circle cx="44" cy="51" r="3.2" fill="#e99ba5"/>
+</svg>

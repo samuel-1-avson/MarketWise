@@ -1,0 +1,523 @@
+@import "tailwindcss";
+
+/* Market Observatory tokens. Keep in sync with lib/tokens.ts (checked by tests/tokens.test.ts). */
+@theme {
+  --color-midnight: #091225;
+  --color-raised: #111e35;
+  --color-ink: #f4f7fc;
+  --color-muted: #afc0d2;
+  --color-line: #2a3f63; /* decorative dividers only */
+  --color-edge: #5b7399; /* borders of controls and inputs (≥ 3:1 on both surfaces) */
+  --color-forex: #3ee0cb;
+  --color-stocks: #77b6ff;
+  --color-commodities: #f1bc60;
+  --color-crypto: #b99bff;
+  --color-sports: #e99ba5;
+
+  --font-sans:
+    "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+  --font-display:
+    "Space Grotesk Variable", "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, sans-serif;
+
+  --ease-observatory: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 180ms;
+  --duration-panel: 380ms;
+  --duration-scene: 900ms;
+}
+
+:root {
+  /* Minimal Clean Design Theme (Anthropic Warm Palette) */
+  --bg-page: #141413;
+  --bg-surface: #1d1d1b;
+  --bg-surface-elevated: #262624;
+  --text-main: #f4f2ea;
+  --text-secondary: #bdbbb2;
+  --border-subtle: #3f3f39;
+  --btn-primary: #f0eee5;
+  --btn-primary-text: #20211e;
+  --btn-hover: #d8d5c9;
+  --bg-input: #2e2e2a;
+  --text-error: #ffb4a8;
+
+  --color-midnight: var(--bg-page);
+  --color-raised: var(--bg-surface);
+  --color-ink: var(--text-main);
+  --color-muted: var(--text-secondary);
+  --color-edge: var(--border-subtle);
+  --color-line: var(--border-subtle);
+  --color-forex: var(--text-main);
+  --color-stocks: var(--text-main);
+  --color-commodities: var(--text-main);
+  --color-crypto: var(--text-main);
+  --color-sports: var(--text-main);
+}
+
+html[data-theme="light"] {
+  --bg-page: #f6f4ee;
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #ffffff;
+  --text-main: #1c1c19;
+  --text-secondary: #605f58;
+  --border-subtle: #d9d6cd;
+  --btn-primary: #20211e;
+  --btn-primary-text: #fbfaf6;
+  --btn-hover: #3a3b36;
+  --bg-input: #f5f3ed;
+  --text-error: #982f26;
+
+  --color-midnight: var(--bg-page);
+  --color-raised: var(--bg-surface);
+  --color-ink: var(--text-main);
+  --color-muted: var(--text-secondary);
+  --color-edge: var(--border-subtle);
+  --color-line: var(--border-subtle);
+  --color-forex: var(--text-main);
+  --color-stocks: var(--text-main);
+  --color-commodities: var(--text-main);
+  --color-crypto: var(--text-main);
+  --color-sports: var(--text-main);
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-radius: 0 !important;
+  }
+
+  html {
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    color-scheme: dark;
+    font-family: var(--font-sans);
+    -webkit-text-size-adjust: 100%;
+    /* Keeps focused and targeted elements clear of the sticky header (WCAG 2.4.11). */
+    scroll-padding-top: 5.5rem;
+  }
+
+  html[data-theme="light"] {
+    color-scheme: light;
+  }
+
+  /* Smooth scrolling only when motion is welcome: never with the OS setting or the site toggle. */
+  @media (prefers-reduced-motion: no-preference) {
+    html:not([data-motion="reduced"]) {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  p,
+  li {
+    text-wrap: pretty;
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+  }
+
+  /* One consistent, high-contrast focus indicator (≥3:1 against every surface used). */
+  :focus-visible {
+    outline: 2px solid var(--btn-primary);
+    outline-offset: 2px;
+    border-radius: 0;
+  }
+
+  ::selection {
+    background: var(--border-subtle);
+    color: var(--text-main);
+  }
+
+  /* Strictly squared radio controls */
+  input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 1.125rem;
+    height: 1.125rem;
+    border: 1.5px solid var(--border-subtle);
+    background-color: var(--bg-surface);
+    border-radius: 0 !important;
+    display: inline-grid;
+    place-content: center;
+    cursor: pointer;
+    margin: 0;
+    vertical-align: middle;
+    transition: border-color var(--duration-fast), background-color var(--duration-fast);
+  }
+
+  input[type="radio"]:checked {
+    border-color: var(--btn-primary);
+    background-color: var(--bg-surface-elevated);
+  }
+
+  input[type="radio"]:checked::before {
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: var(--btn-primary);
+    border-radius: 0 !important;
+  }
+
+  /* Strictly squared checkbox controls */
+  input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 1.125rem;
+    height: 1.125rem;
+    border: 1.5px solid var(--border-subtle);
+    background-color: var(--bg-surface);
+    border-radius: 0 !important;
+    display: inline-grid;
+    place-content: center;
+    cursor: pointer;
+    margin: 0;
+    vertical-align: middle;
+    transition: border-color var(--duration-fast), background-color var(--duration-fast);
+  }
+
+  input[type="checkbox"]:checked {
+    border-color: var(--btn-primary);
+    background-color: var(--btn-primary);
+  }
+
+  input[type="checkbox"]:checked::after {
+    content: "";
+    width: 0.35rem;
+    height: 0.65rem;
+    border: solid var(--btn-primary-text);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    margin-bottom: 2px;
+  }
+
+  input[type="text"],
+  input[type="search"],
+  button,
+  select,
+  textarea {
+    border-radius: 0 !important;
+  }
+
+  /* Scroll targets sit clear of the sticky header. */
+  [id] {
+    scroll-margin-top: 6rem;
+  }
+
+  /* Sleek modern custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg-page);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-subtle);
+    border-radius: 0 !important;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+  }
+}
+
+@layer components {
+  .surface {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 0 !important;
+    box-shadow: none;
+    transition: border-color var(--duration-fast) var(--ease-observatory);
+  }
+
+  .surface-glass {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 0 !important;
+    box-shadow: none;
+  }
+
+  .surface-elevated {
+    background-color: var(--bg-surface-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: 0 !important;
+    box-shadow: none;
+  }
+
+  /* Presenter scenes: each group rises in turn once, when a slide appears; no idle motion. */
+  .scene-rise {
+    animation: scene-rise var(--duration-scene) var(--ease-observatory) both;
+    animation-delay: calc(var(--i, 0) * 110ms);
+  }
+
+  /* Home constellation: one fade-in, then still. Opacity only, so positioning transforms survive. */
+  .constellation-in {
+    animation: constellation-in var(--duration-scene) var(--ease-observatory) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  /* Shows where a deep link (glossary term, source entry) landed. */
+  .surface:target {
+    outline: 2px solid var(--btn-primary);
+    outline-offset: 2px;
+  }
+
+  .prose-mw {
+    max-width: 68ch;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+  }
+
+  .prose-mw > * + * {
+    margin-top: 1.1em;
+  }
+
+  .prose-mw a {
+    color: var(--text-main);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color var(--duration-fast);
+  }
+  .prose-mw a:hover {
+    color: var(--btn-hover);
+  }
+}
+
+@layer utilities {
+  .bg-observatory-grid {
+    background-image:
+      radial-gradient(ellipse 70% 45% at 50% -10%, rgba(255, 255, 255, 0.02), transparent 75%),
+      radial-gradient(circle at 90% 10%, rgba(255, 255, 255, 0.015), transparent 50%),
+      radial-gradient(circle at 10% 40%, rgba(255, 255, 255, 0.01), transparent 45%);
+  }
+
+  .bg-dots {
+    background-size: 24px 24px;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  }
+
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* Reduced motion: honoured from the OS by default and from the site's own toggle. */
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-motion="full"]) *,
+  html:not([data-motion="full"]) *::before,
+  html:not([data-motion="full"]) *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html:not([data-motion="full"])::view-transition-group(*),
+  html:not([data-motion="full"])::view-transition-old(*),
+  html:not([data-motion="full"])::view-transition-new(*) {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+  }
+}
+
+html[data-motion="reduced"] *,
+html[data-motion="reduced"] *::before,
+html[data-motion="reduced"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  animation-delay: 0ms !important;
+  transition-duration: 0.01ms !important;
+  transition-delay: 0ms !important;
+  scroll-behavior: auto !important;
+}
+
+html[data-motion="reduced"]::view-transition-group(*),
+html[data-motion="reduced"]::view-transition-old(*),
+html[data-motion="reduced"]::view-transition-new(*) {
+  animation-duration: 0.01ms !important;
+  animation-delay: 0ms !important;
+}
+
+@media print {
+  /* Everything prints black on white, so light-on-dark screen colours never reach the page. */
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  main,
+  main * {
+    color: #000 !important;
+    background: transparent !important;
+    border-color: #555 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  main a {
+    text-decoration: underline !important;
+  }
+
+  main svg {
+    max-width: 100%;
+  }
+}
+
+@keyframes scene-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Self-animating graphics for presentation scenes */
+@keyframes svg-orbit-flow {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -40;
+  }
+}
+
+@keyframes svg-pulse-glow {
+  0%,
+  100% {
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes svg-flow-dash {
+  to {
+    stroke-dashoffset: -32;
+  }
+}
+
+@keyframes svg-node-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 1;
+  }
+}
+
+.svg-orbit-flow {
+  animation: svg-orbit-flow 18s linear infinite;
+}
+
+.svg-pulse-glow {
+  animation: svg-pulse-glow 3s ease-in-out infinite;
+}
+
+.svg-flow-dash {
+  animation: svg-flow-dash 2.5s linear infinite;
+}
+
+.svg-node-breathe {
+  transform-origin: center;
+  animation: svg-node-breathe 4s ease-in-out infinite;
+}
+
+@keyframes constellation-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Hover lift only when motion is welcome. It is not an idle animation. */
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-motion="reduced"]) .motion-lift {
+    transition:
+      transform var(--duration-fast) var(--ease-observatory),
+      border-color var(--duration-fast) var(--ease-observatory),
+      background-color var(--duration-fast) var(--ease-observatory);
+  }
+
+  html:not([data-motion="reduced"]) .motion-lift:hover,
+  html:not([data-motion="reduced"]) .motion-lift:focus-visible {
+    transform: translateY(-2px);
+  }
+}
+
+/* Page crossfade. Pointer events pass through so the fade never blocks a click. */
+::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-old(.page-exit) {
+  animation: 220ms var(--ease-observatory) both page-out;
+}
+
+::view-transition-new(.page-enter) {
+  animation: 320ms var(--ease-observatory) both page-in;
+}
+
+@keyframes page-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* A hidden tab stays still: in-progress entrances pause until the page is visible again. */
+html[data-page-hidden="true"] *,
+html[data-page-hidden="true"] *::before,
+html[data-page-hidden="true"] *::after {
+  animation-play-state: paused !important;
+}
+
+html[data-page-hidden="true"]::view-transition-group(*),
+html[data-page-hidden="true"]::view-transition-old(*),
+html[data-page-hidden="true"]::view-transition-new(*) {
+  animation-play-state: paused !important;
+}
