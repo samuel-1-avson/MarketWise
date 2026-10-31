@@ -19,7 +19,7 @@ export function CryptoCustodyMechanics() {
   };
 
   return (
-    <div className="surface rounded-none border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-6 sm:p-8">
+    <div className="surface rounded-none border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-4 sm:p-8">
       {/* Header */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
@@ -39,7 +39,7 @@ export function CryptoCustodyMechanics() {
       </p>
 
       {/* Tabs */}
-      <div className="mt-6 flex border-b border-[var(--border-subtle)]" role="tablist" aria-label="Crypto exploration modes">
+      <div className="mt-6 flex border-b border-[var(--border-subtle)] overflow-x-auto" role="tablist" aria-label="Crypto exploration modes">
         <button
           type="button"
           role="tab"
@@ -48,13 +48,13 @@ export function CryptoCustodyMechanics() {
             setTab("custody");
             setSimulatedShock("normal");
           }}
-          className={`px-5 py-2.5 text-sm font-semibold transition-colors rounded-none border-b-2 -mb-px ${
+          className={`px-3.5 sm:px-5 py-2.5 text-xs sm:text-sm font-semibold transition-colors rounded-none border-b-2 -mb-px whitespace-nowrap shrink-0 ${
             tab === "custody"
               ? "border-[var(--btn-primary)] text-[var(--text-main)] bg-[var(--bg-surface-elevated)]"
               : "border-transparent text-[var(--text-secondary)] hover:text-[var(--text-main)]"
           }`}
         >
-          1. Self-Custody vs. Centralized Exchange IOU
+          1. Custody Architecture
         </button>
         <button
           type="button"
@@ -64,13 +64,13 @@ export function CryptoCustodyMechanics() {
             setTab("consensus");
             setHasBroadcast(false);
           }}
-          className={`px-5 py-2.5 text-sm font-semibold transition-colors rounded-none border-b-2 -mb-px ${
+          className={`px-3.5 sm:px-5 py-2.5 text-xs sm:text-sm font-semibold transition-colors rounded-none border-b-2 -mb-px whitespace-nowrap shrink-0 ${
             tab === "consensus"
               ? "border-[var(--btn-primary)] text-[var(--text-main)] bg-[var(--bg-surface-elevated)]"
               : "border-transparent text-[var(--text-secondary)] hover:text-[var(--text-main)]"
           }`}
         >
-          2. Consensus Validation Sandbox
+          2. Consensus Sandbox
         </button>
       </div>
 

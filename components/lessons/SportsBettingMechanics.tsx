@@ -74,7 +74,7 @@ export function SportsBettingMechanics() {
   const operatorKeptProfit = (simStake - simStake / marginMultiplier).toFixed(2);
 
   return (
-    <div className="surface rounded-none border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-6 sm:p-8">
+    <div className="surface rounded-none border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-4 sm:p-8">
       {/* Header and Badge */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
@@ -100,20 +100,20 @@ export function SportsBettingMechanics() {
         <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[var(--text-secondary)]">
           Event Structure:
         </span>
-        <div className="inline-flex rounded-none border border-[var(--border-subtle)] bg-[var(--bg-surface-elevated)] p-1">
+        <div className="grid grid-cols-1 sm:grid-cols-2 w-full sm:w-auto rounded-none border border-[var(--border-subtle)] bg-[var(--bg-surface-elevated)] p-1 gap-1">
           <button
             type="button"
             onClick={() => {
               setMode("two-way");
               setSimOutcome(0);
             }}
-            className={`rounded-none px-4 py-2 font-mono text-xs font-semibold uppercase tracking-wider transition-colors ${
+            className={`rounded-none px-4 py-2 font-mono text-xs font-semibold uppercase tracking-wider text-center transition-colors ${
               mode === "two-way"
                 ? "bg-[var(--btn-primary)] text-[var(--btn-primary-text)]"
                 : "text-[var(--text-secondary)] hover:text-[var(--text-main)]"
             }`}
           >
-            2-Outcome Agreement (Win / Loss)
+            2-Outcome Agreement
           </button>
           <button
             type="button"
@@ -121,13 +121,13 @@ export function SportsBettingMechanics() {
               setMode("three-way");
               setSimOutcome(0);
             }}
-            className={`rounded-none px-4 py-2 font-mono text-xs font-semibold uppercase tracking-wider transition-colors ${
+            className={`rounded-none px-4 py-2 font-mono text-xs font-semibold uppercase tracking-wider text-center transition-colors ${
               mode === "three-way"
                 ? "bg-[var(--btn-primary)] text-[var(--btn-primary-text)]"
                 : "text-[var(--text-secondary)] hover:text-[var(--text-main)]"
             }`}
           >
-            3-Outcome Agreement (Win / Draw / Loss)
+            3-Outcome Agreement
           </button>
         </div>
       </div>
@@ -165,17 +165,17 @@ export function SportsBettingMechanics() {
                 className="mt-2 h-2 w-full cursor-pointer appearance-none rounded-none bg-[var(--input-bg)] accent-[var(--btn-primary)]"
                 aria-label="Adjust Outcome 1 true probability"
               />
-              <div className="mt-2 flex gap-2">
+              <div className="mt-2 grid grid-cols-1 sm:grid-cols-3 gap-2">
                 {[
-                  { label: "50 / 50 (Coin Toss)", v: 50 },
-                  { label: "60 / 40 (Slight Favourite)", v: 60 },
-                  { label: "75 / 25 (Heavy Favourite)", v: 75 },
+                  { label: "50 / 50 (Even)", v: 50 },
+                  { label: "60 / 40 (Slight)", v: 60 },
+                  { label: "75 / 25 (Heavy)", v: 75 },
                 ].map((preset) => (
                   <button
                     key={preset.v}
                     type="button"
                     onClick={() => setProb1(preset.v)}
-                    className={`rounded-none border border-[var(--border-subtle)] px-2.5 py-1 text-xs font-mono transition-colors ${
+                    className={`rounded-none border border-[var(--border-subtle)] px-2.5 py-1 text-xs font-mono text-center transition-colors ${
                       prob1 === preset.v
                         ? "bg-[var(--btn-primary)] text-[var(--btn-primary-text)]"
                         : "bg-[var(--bg-surface-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-main)]"
@@ -188,23 +188,23 @@ export function SportsBettingMechanics() {
             </div>
           ) : (
             <div className="space-y-2">
-              <div className="flex gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                 {[
-                  { label: "Balanced (33 / 34 / 33)", p: [33, 34, 33] as [number, number, number] },
-                  { label: "Home Edge (45 / 25 / 30)", p: [45, 25, 30] as [number, number, number] },
-                  { label: "Strong Favourite (60 / 20 / 20)", p: [60, 20, 20] as [number, number, number] },
+                  { label: "Balanced (33/34/33)", p: [33, 34, 33] as [number, number, number] },
+                  { label: "Home Edge (45/25/30)", p: [45, 25, 30] as [number, number, number] },
+                  { label: "Strong Fav (60/20/20)", p: [60, 20, 20] as [number, number, number] },
                 ].map((preset) => (
                   <button
                     key={preset.label}
                     type="button"
                     onClick={() => setThreeWayProbs(preset.p)}
-                    className="rounded-none border border-[var(--border-subtle)] bg-[var(--bg-surface-elevated)] px-2.5 py-1 text-xs font-mono text-[var(--text-secondary)] hover:text-[var(--text-main)] transition-colors"
+                    className="rounded-none border border-[var(--border-subtle)] bg-[var(--bg-surface-elevated)] px-2.5 py-1 text-xs font-mono text-center text-[var(--text-secondary)] hover:text-[var(--text-main)] transition-colors"
                   >
                     {preset.label}
                   </button>
                 ))}
               </div>
-              <div className="flex justify-between text-xs font-mono text-[var(--text-secondary)]">
+              <div className="flex justify-between text-xs font-mono text-[var(--text-secondary)] pt-1">
                 <span>Outcome 1: {threeWayProbs[0]}%</span>
                 <span>Draw: {threeWayProbs[1]}%</span>
                 <span>Outcome 2: {threeWayProbs[2]}%</span>

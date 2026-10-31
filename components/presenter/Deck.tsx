@@ -300,24 +300,37 @@ export function Deck({ initialIndex }: { initialIndex: number }) {
 
       {/* ---------------------------------------------------------------- top bar */}
       <header
-        className={`flex flex-wrap items-center justify-between gap-2 border-b border-line bg-midnight px-3 py-2 ${barState} ${overlay} ${isFullscreen ? "top-0" : ""}`}
+        className={`flex flex-col gap-2 border-b border-[var(--border-subtle)] bg-[var(--bg-surface)] px-3 py-2 sm:flex-row sm:items-center sm:justify-between ${barState} ${overlay} ${isFullscreen ? "top-0" : ""}`}
       >
-        <div className="flex items-center gap-2">
-          <Link href="/" className={barButton}>
-            ← Exit
-          </Link>
-          <p className="px-2 text-sm text-muted" data-testid="deck-position">
-            <span className="font-semibold text-ink">
-              Slide {slide.number} of {SLIDE_COUNT}
-            </span>
-            <span className="hidden sm:inline"> · {chapter?.label}</span>
-          </p>
+        <div className="flex items-center justify-between gap-2 sm:justify-start">
+          <div className="flex items-center gap-2">
+            <Link href="/" className={barButton}>
+              ← Exit
+            </Link>
+            <p className="px-2 text-sm text-[var(--text-secondary)]" data-testid="deck-position">
+              <span className="font-semibold text-[var(--text-main)]">
+                Slide {slide.number} of {SLIDE_COUNT}
+              </span>
+              <span className="hidden sm:inline"> · {chapter?.label}</span>
+            </p>
+          </div>
+          <div className="flex items-center gap-2 sm:hidden">
+            <button
+              type="button"
+              className={barButton}
+              aria-keyshortcuts="C"
+              onClick={() => setDialog("chapters")}
+            >
+              Chapters <Hint>C</Hint>
+            </button>
+            <ThemeToggle className={barButton} />
+          </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:overflow-visible sm:pb-0">
           <p
             data-testid="notes-status"
-            className={`rounded-none border px-3 py-1 text-xs font-semibold uppercase tracking-wider ${
+            className={`hidden shrink-0 rounded-none border px-3 py-1 text-xs font-semibold uppercase tracking-wider md:block ${
               notesOpen
                 ? "border-[var(--btn-primary,#F0EEE5)] bg-[var(--bg-surface-elevated,#262624)] text-[var(--text-main,#F4F2EA)]"
                 : "border-[var(--border-subtle,#3F3F39)] bg-[var(--bg-surface,#1D1D1B)] text-[var(--text-secondary,#BDBBB2)]"
@@ -327,7 +340,7 @@ export function Deck({ initialIndex }: { initialIndex: number }) {
           </p>
           {session.timer.accumulatedMs > 0 || running ? (
             <p
-              className="rounded-none border border-[var(--border-subtle,#3F3F39)] bg-[var(--bg-surface,#1D1D1B)] px-3 py-1 font-mono text-xs text-[var(--text-main,#F4F2EA)]"
+              className="shrink-0 rounded-none border border-[var(--border-subtle,#3F3F39)] bg-[var(--bg-surface,#1D1D1B)] px-3 py-1 font-mono text-xs text-[var(--text-main,#F4F2EA)]"
               data-testid="timer-chip"
             >
               <span className="sr-only">Elapsed </span>
@@ -337,7 +350,7 @@ export function Deck({ initialIndex }: { initialIndex: number }) {
           ) : null}
           <button
             type="button"
-            className={barButton}
+            className={`hidden sm:inline-flex shrink-0 ${barButton}`}
             aria-keyshortcuts="C"
             onClick={() => setDialog("chapters")}
           >
@@ -346,7 +359,7 @@ export function Deck({ initialIndex }: { initialIndex: number }) {
           <button
             ref={notesToggleRef}
             type="button"
-            className={barButton}
+            className={`shrink-0 ${barButton}`}
             aria-pressed={notesOpen}
             aria-controls={notesOpen ? "deck-notes" : undefined}
             aria-keyshortcuts="N"
@@ -356,7 +369,7 @@ export function Deck({ initialIndex }: { initialIndex: number }) {
           </button>
           <button
             type="button"
-            className={barButton}
+            className={`shrink-0 ${barButton}`}
             aria-pressed={session.timerOpen}
             aria-keyshortcuts="T"
             onClick={() => setTimerPanel(!session.timerOpen)}
@@ -365,7 +378,7 @@ export function Deck({ initialIndex }: { initialIndex: number }) {
           </button>
           <button
             type="button"
-            className={barButton}
+            className={`shrink-0 ${barButton}`}
             aria-pressed={isFullscreen}
             aria-keyshortcuts="F"
             disabled={!canFullscreen}
@@ -375,7 +388,7 @@ export function Deck({ initialIndex }: { initialIndex: number }) {
           </button>
           <button
             type="button"
-            className={barButton}
+            className={`shrink-0 ${barButton}`}
             aria-pressed={textOpen}
             aria-controls={textOpen ? "scene-text" : undefined}
             onClick={() => setTextOpen((open) => !open)}
@@ -384,22 +397,24 @@ export function Deck({ initialIndex }: { initialIndex: number }) {
           </button>
           <button
             type="button"
-            className={barButton}
+            className={`shrink-0 ${barButton}`}
             aria-keyshortcuts="?"
             onClick={() => setDialog("help")}
           >
             Shortcuts <Hint>?</Hint>
           </button>
-          <ThemeToggle className={barButton} />
-          <Link href={detourHref(HANDOUT_PATH, slide)} className={barButton}>
+          <div className="hidden sm:inline-flex shrink-0">
+            <ThemeToggle className={barButton} />
+          </div>
+          <Link href={detourHref(HANDOUT_PATH, slide)} className={`shrink-0 ${barButton}`}>
             Handout
           </Link>
         </div>
       </header>
 
-      <p className="border-b border-line bg-raised px-4 py-2 text-sm text-muted lg:hidden">
+      <p className="border-b border-[var(--border-subtle)] bg-[var(--bg-surface-elevated)] px-4 py-2 text-xs sm:text-sm text-[var(--text-secondary)] lg:hidden">
         This deck is built for a large screen. Swipe left or right to change slides. On a phone, the{" "}
-        <Link href={HANDOUT_PATH} className="text-forex underline underline-offset-4">
+        <Link href={HANDOUT_PATH} className="text-[var(--text-main)] font-semibold underline underline-offset-4">
           handout
         </Link>{" "}
         is easier to read.
@@ -518,7 +533,7 @@ export function Deck({ initialIndex }: { initialIndex: number }) {
             aria-label="Speaker notes"
             tabIndex={0}
             data-scroll-region
-            className="max-h-[45%] w-full shrink-0 overflow-y-auto border-t border-line bg-raised p-5 lg:max-h-none lg:w-[22rem] lg:border-l lg:border-t-0"
+            className="max-h-[45%] w-full shrink-0 overflow-y-auto border-t border-[var(--border-subtle)] bg-[var(--bg-surface-elevated)] p-5 lg:max-h-none lg:w-[22rem] lg:border-l lg:border-t-0"
             data-testid="notes-panel"
           >
             <NotesPanel
@@ -535,7 +550,7 @@ export function Deck({ initialIndex }: { initialIndex: number }) {
 
       {/* ---------------------------------------------------------------- bottom bar */}
       <footer
-        className={`border-t border-line bg-midnight px-3 py-2 ${barState} ${overlay} ${isFullscreen ? "bottom-0" : ""}`}
+        className={`border-t border-[var(--border-subtle)] bg-[var(--bg-surface)] px-3 py-2 ${barState} ${overlay} ${isFullscreen ? "bottom-0" : ""}`}
       >
         <div className="flex items-center gap-3">
           <button

@@ -63,7 +63,7 @@ export function ForexSpreadMechanics() {
   }, [cfg, spreadPips, tradeAmount, holdingDays]);
 
   return (
-    <div className="surface rounded-none border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-6 sm:p-8">
+    <div className="surface rounded-none border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-4 sm:p-8">
       {/* Header */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
@@ -89,13 +89,13 @@ export function ForexSpreadMechanics() {
         <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[var(--text-secondary)]">
           Fictional Currency Pair:
         </span>
-        <div className="inline-flex rounded-none border border-[var(--border-subtle)] bg-[var(--bg-surface-elevated)] p-1">
+        <div className="grid grid-cols-3 sm:inline-flex w-full sm:w-auto rounded-none border border-[var(--border-subtle)] bg-[var(--bg-surface-elevated)] p-1">
           {PAIRS.map((p, idx) => (
             <button
               key={p.pair}
               type="button"
               onClick={() => setSelectedPairIndex(idx)}
-              className={`rounded-none px-4 py-2 font-mono text-xs font-semibold uppercase tracking-wider transition-colors ${
+              className={`rounded-none px-3 py-2 text-center font-mono text-xs font-semibold uppercase tracking-wider transition-colors ${
                 selectedPairIndex === idx
                   ? "bg-[var(--btn-primary)] text-[var(--btn-primary-text)]"
                   : "text-[var(--text-secondary)] hover:text-[var(--text-main)]"
@@ -133,17 +133,17 @@ export function ForexSpreadMechanics() {
             className="h-2 w-full cursor-pointer appearance-none rounded-none bg-[var(--input-bg)] accent-[var(--btn-primary)]"
             aria-label="Adjust dealer spread in pips"
           />
-          <div className="flex gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             {[
-              { label: "Institutional (5 pips)", v: 5 },
-              { label: "Retail Standard (25 pips)", v: 25 },
-              { label: "Volatile / Wide (60 pips)", v: 60 },
+              { label: "5 pips (Inst.)", v: 5 },
+              { label: "25 pips (Retail)", v: 25 },
+              { label: "60 pips (Wide)", v: 60 },
             ].map((preset) => (
               <button
                 key={preset.v}
                 type="button"
                 onClick={() => setSpreadPips(preset.v)}
-                className={`rounded-none border border-[var(--border-subtle)] px-2.5 py-1 text-xs font-mono transition-colors ${
+                className={`rounded-none border border-[var(--border-subtle)] px-2 py-1.5 text-center text-xs font-mono transition-colors ${
                   spreadPips === preset.v
                     ? "bg-[var(--btn-primary)] text-[var(--btn-primary-text)]"
                     : "bg-[var(--bg-surface-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-main)]"
@@ -289,28 +289,28 @@ export function ForexSpreadMechanics() {
           In an open stock exchange, buyer and seller trade directly. In retail margin forex, your dealer is the direct counterparty:
         </p>
 
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
           <button
             type="button"
             onClick={() => setSimDirection("buy")}
-            className={`rounded-none border px-4 py-2 font-mono text-xs font-semibold transition-all ${
+            className={`rounded-none border px-4 py-2.5 font-mono text-xs font-semibold text-center transition-all ${
               simDirection === "buy"
                 ? "border-[var(--btn-primary)] bg-[var(--btn-primary)] text-[var(--btn-primary-text)]"
                 : "border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-main)]"
             }`}
           >
-            Scenario: You Open a Long (Buy) Contract
+            Scenario: Long (Buy) Contract
           </button>
           <button
             type="button"
             onClick={() => setSimDirection("sell")}
-            className={`rounded-none border px-4 py-2 font-mono text-xs font-semibold transition-all ${
+            className={`rounded-none border px-4 py-2.5 font-mono text-xs font-semibold text-center transition-all ${
               simDirection === "sell"
                 ? "border-[var(--btn-primary)] bg-[var(--btn-primary)] text-[var(--btn-primary-text)]"
                 : "border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-main)]"
             }`}
           >
-            Scenario: You Open a Short (Sell) Contract
+            Scenario: Short (Sell) Contract
           </button>
         </div>
 

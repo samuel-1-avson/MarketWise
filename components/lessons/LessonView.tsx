@@ -127,9 +127,33 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
         </div>
 
         <div className="mt-12 grid gap-12 lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-16">
-          {/* Table of Contents Sticky Sidebar */}
+          {/* Table of Contents: Collapsible on mobile, sticky sidebar on desktop */}
           <nav aria-label="On this page" className="lg:sticky lg:top-24 lg:self-start">
-            <div className="surface rounded-none p-5 border border-[var(--border-subtle)]">
+            {/* Mobile collapsible view */}
+            <details className="surface group rounded-none p-4 border border-[var(--border-subtle)] lg:hidden [&::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer items-center justify-between text-xs font-mono font-semibold uppercase tracking-widest text-[var(--text-main)]">
+                <span>Jump to Lesson Section ({lesson.sections.length})</span>
+                <span aria-hidden="true" className="transition-transform duration-200 group-open:rotate-180">▾</span>
+              </summary>
+              <ol className="mt-3 space-y-1 border-t border-[var(--border-subtle)] pt-3 text-xs">
+                {lesson.sections.map((s, i) => (
+                  <li key={s.kind}>
+                    <a
+                      href={`#${s.kind}`}
+                      className="group flex min-h-9 items-center gap-2 rounded-none px-2.5 py-1 text-[var(--text-secondary)] transition-colors hover:bg-[var(--bg-surface-elevated)] hover:text-[var(--text-main)]"
+                    >
+                      <span className="w-4 font-mono text-[0.7rem] text-[var(--text-secondary)] group-hover:text-[var(--text-main)]">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span className="line-clamp-1">{s.heading}</span>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </details>
+
+            {/* Desktop sticky sidebar */}
+            <div className="surface hidden rounded-none p-5 border border-[var(--border-subtle)] lg:block">
               <h2 className="text-xs font-mono font-semibold uppercase tracking-widest text-[var(--text-secondary)]">
                 Lesson Sections
               </h2>

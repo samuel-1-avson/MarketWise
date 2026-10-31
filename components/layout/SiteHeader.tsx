@@ -93,39 +93,41 @@ export function SiteHeader() {
           <ThemeToggle className="ml-1 inline-flex min-h-9 items-center gap-1.5 rounded-none border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-3 py-1 text-xs font-semibold text-[var(--text-main)] transition-all hover:bg-[var(--bg-surface-elevated)]" />
         </nav>
 
-        <details
-          className="relative xl:hidden"
-          open={open}
-          onToggle={(event) => setOpen(event.currentTarget.open)}
-          onKeyDown={onKeyDown}
-        >
-          <summary
-            ref={summaryRef}
-            className="inline-flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-none border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-4 text-sm font-semibold text-[var(--text-main)] transition-all hover:bg-[var(--bg-surface-elevated)] [&::-webkit-details-marker]:hidden"
+        <div className="flex items-center gap-2 xl:hidden">
+          <ThemeToggle className="inline-flex min-h-11 items-center justify-center rounded-none border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-3 text-xs font-semibold text-[var(--text-main)] transition-all hover:bg-[var(--bg-surface-elevated)]" />
+          <details
+            className="relative"
+            open={open}
+            onToggle={(event) => setOpen(event.currentTarget.open)}
+            onKeyDown={onKeyDown}
           >
-            <span aria-hidden="true" className="text-lg leading-none">
-              {open ? "✕" : "☰"}
-            </span>
-            <span>Menu</span>
-          </summary>
-          <nav
-            aria-label="Primary"
-            className="surface absolute right-0 top-[calc(100%+0.5rem)] w-72 max-w-[calc(100vw-2rem)] rounded-none border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-3.5 shadow-none"
-          >
-            <NavLinks pathname={pathname} vertical />
-            <div className="mt-3 border-t border-[var(--border-subtle)] pt-3 flex flex-col gap-2">
-              <Link
-                href="/present"
-                className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-none border border-[var(--btn-primary)] bg-[var(--btn-primary)] px-4 text-sm font-semibold text-[var(--btn-primary-text)] transition-all hover:bg-[var(--btn-hover)]"
-              >
-                <span>Launch Presentation</span>
-                <span aria-hidden="true">↗</span>
-              </Link>
-              <MotionToggle className="w-full justify-center" />
-              <ThemeToggle className="w-full justify-center inline-flex min-h-10 items-center gap-2 rounded-none border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-4 text-sm font-semibold text-[var(--text-main)] hover:bg-[var(--bg-surface-elevated)]" />
-            </div>
-          </nav>
-        </details>
+            <summary
+              ref={summaryRef}
+              className="inline-flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-none border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-3.5 text-sm font-semibold text-[var(--text-main)] transition-all hover:bg-[var(--bg-surface-elevated)] [&::-webkit-details-marker]:hidden"
+            >
+              <span aria-hidden="true" className="text-lg leading-none">
+                {open ? "✕" : "☰"}
+              </span>
+              <span>Menu</span>
+            </summary>
+            <nav
+              aria-label="Primary"
+              className="surface absolute right-0 top-[calc(100%+0.5rem)] w-72 max-w-[calc(100vw-2rem)] rounded-none border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-3.5 shadow-none"
+            >
+              <NavLinks pathname={pathname} vertical />
+              <div className="mt-3 border-t border-[var(--border-subtle)] pt-3 flex flex-col gap-2">
+                <Link
+                  href="/present"
+                  className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-none border border-[var(--btn-primary)] bg-[var(--btn-primary)] px-4 text-sm font-semibold text-[var(--btn-primary-text)] transition-all hover:bg-[var(--btn-hover)]"
+                >
+                  <span>Launch Presentation</span>
+                  <span aria-hidden="true">↗</span>
+                </Link>
+                <MotionToggle className="w-full justify-center" />
+              </div>
+            </nav>
+          </details>
+        </div>
       </Container>
     </header>
   );

@@ -121,7 +121,7 @@ export function MarketConstellation() {
               onMouseLeave={() => setActiveTopic(null)}
               onFocus={() => setActiveTopic(body.id)}
               onBlur={() => setActiveTopic(null)}
-              className={`constellation-in group absolute z-10 flex w-[5.8rem] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-1 rounded-none border px-2 py-2 text-center text-xs font-semibold leading-tight backdrop-blur-md transition-all duration-300 sm:w-32 sm:px-3 sm:py-2.5 sm:text-sm ${
+              className={`constellation-in group absolute z-10 flex w-[5.2rem] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-1 rounded-none border px-1.5 py-1.5 text-center text-[0.7rem] font-semibold leading-tight backdrop-blur-md transition-all duration-300 sm:w-32 sm:px-3 sm:py-2.5 sm:text-sm ${
                 isHovered
                   ? "scale-105 border-[var(--btn-primary)] bg-[var(--bg-surface-elevated)] text-[var(--text-main)] shadow-none"
                   : "border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-main)] hover:border-[var(--btn-primary)] hover:bg-[var(--bg-surface-elevated)]"

@@ -63,7 +63,7 @@ export function CommoditiesConvergenceMechanics() {
   }, [cropQuantity, harvestSpotPrice, lockedFuturesPrice, costOfProduction]);
 
   return (
-    <div className="surface rounded-none border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-6 sm:p-8">
+    <div className="surface rounded-none border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-4 sm:p-8">
       {/* Header */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
@@ -82,26 +82,26 @@ export function CommoditiesConvergenceMechanics() {
       </p>
 
       {/* Mode Tabs */}
-      <div className="mt-6 flex border-b border-[var(--border-subtle)]" role="tablist" aria-label="Commodities exploration modes">
+      <div className="mt-6 flex border-b border-[var(--border-subtle)] overflow-x-auto" role="tablist" aria-label="Commodities exploration modes">
         <button
           type="button"
           role="tab"
           aria-selected={tab === "convergence"}
           onClick={() => setTab("convergence")}
-          className={`px-5 py-2.5 text-sm font-semibold transition-colors rounded-none border-b-2 -mb-px ${
+          className={`px-3.5 sm:px-5 py-2.5 text-xs sm:text-sm font-semibold transition-colors rounded-none border-b-2 -mb-px whitespace-nowrap shrink-0 ${
             tab === "convergence"
               ? "border-[var(--btn-primary)] text-[var(--text-main)] bg-[var(--bg-surface-elevated)]"
               : "border-transparent text-[var(--text-secondary)] hover:text-[var(--text-main)]"
           }`}
         >
-          1. Spot-Futures Expiration Convergence
+          1. Expiration Convergence
         </button>
         <button
           type="button"
           role="tab"
           aria-selected={tab === "hedging"}
           onClick={() => setTab("hedging")}
-          className={`px-5 py-2.5 text-sm font-semibold transition-colors rounded-none border-b-2 -mb-px ${
+          className={`px-3.5 sm:px-5 py-2.5 text-xs sm:text-sm font-semibold transition-colors rounded-none border-b-2 -mb-px whitespace-nowrap shrink-0 ${
             tab === "hedging"
               ? "border-[var(--btn-primary)] text-[var(--text-main)] bg-[var(--bg-surface-elevated)]"
               : "border-transparent text-[var(--text-secondary)] hover:text-[var(--text-main)]"

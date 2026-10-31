@@ -135,12 +135,14 @@ export default function HomePage() {
               outcomes arise, and where the risks sit.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3.5">
-              <LinkButton href="/explore">Explore the systems</LinkButton>
-              <LinkButton href="/compare" variant="secondary">
+            <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-3">
+              <LinkButton href="/explore" className="w-full sm:w-auto text-center">
+                Explore the systems
+              </LinkButton>
+              <LinkButton href="/compare" variant="secondary" className="w-full sm:w-auto text-center">
                 Compare side by side
               </LinkButton>
-              <LinkButton href="/present" variant="secondary">
+              <LinkButton href="/present" variant="secondary" className="w-full sm:w-auto text-center">
                 Launch presentation ↗
               </LinkButton>
             </div>
